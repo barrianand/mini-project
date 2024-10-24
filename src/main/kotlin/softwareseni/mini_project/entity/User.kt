@@ -8,24 +8,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @Table(name = "users")
 class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     var id: Int = 0
 
-    @Column(unique = true)
+    @Column(name = "user", unique = true)
     var user = ""
 
     @Column(name = "pwd")
+    @JsonIgnore
     var pwd = ""
-//        @JsonIgnore
-//        get() = field
-//        set(value) {
-//            val passwordEncoder = BCryptPasswordEncoder()
-//            field = passwordEncoder.encode(value)
-//        }
 
     fun comparePassword(password: String): Boolean {
         println("hashed pass : " + this.pwd)
-        val passwordEncoder = BCryptPasswordEncoder()
         return BCryptPasswordEncoder().matches(password, this.pwd)
     }
 }

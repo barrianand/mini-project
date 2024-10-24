@@ -14,12 +14,13 @@ class UserServiceImpl(
 ) : UserService {
     override fun createUser(userDto: UserDto) : UserDto {
         val user = usersMapper.toEntity(userDto)
+        user.pwd = BCryptPasswordEncoder().encode(user.pwd).toString()
         userRepository.save(user)
         return usersMapper.fromEntity(user)
     }
 
-    override fun getUsers(id: Int): UserDto {
-        return usersMapper.fromEntity(userRepository.findById(id).get())
+    override fun getUsers(id: Int): User {
+        return userRepository.findById(id).get()
     }
 
     override fun getAllUsers(): List<User> {
@@ -33,13 +34,7 @@ class UserServiceImpl(
     }
 
     override fun findByUsername(user: String): User? {
-        val userMatched = userRepository.findByUser(user)
-        val passwordEncoder = BCryptPasswordEncoder()
-        if (userMatched != null) {
-            userMatched.pwd = passwordEncoder.encode(userMatched.pwd)
-            println("user pass : " +userMatched.pwd)
-        }
-        return userMatched
+        return userRepository.findByUser(user)
     }
 
 

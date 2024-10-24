@@ -1,34 +1,43 @@
 package softwareseni.mini_project.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.*
-import softwareseni.mini_project.entity.User
-import java.time.LocalDate
+import java.sql.Date
+import java.sql.Timestamp
+import java.time.*
+import java.time.format.DateTimeFormatter
 
 @Entity
 @Table(name = "tasks")
-open class Task {
+class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    open var id: Int? = null
+    @Column(name = "id")
+    var id: Int = 0
 
     @Column(name = "title", nullable = false, length = 250)
-    open var title: String? = null
+    var title: String = ""
 
     @Column(name = "`desc`", length = 250)
-    open var desc: String? = null
+    var desc: String = ""
 
     @Column(name = "status", length = 250)
-    open var status: String? = null
+    var status: Int = 0
 
     @Column(name = "due_date")
-    open var dueDate: LocalDate? = null
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    var dueDate: Timestamp = Timestamp.valueOf(LocalDate.now()
+        .atTime(LocalTime.now())
+        .atOffset(OffsetDateTime.now().offset)
+        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    open var createdBy: User? = null
+    @Column(name = "created_by")
+    var createdBy: Int = 0
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigned_to")
-    open var assignedTo: User? = null
+    @Column(name = "created_date")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    var createdDate: Timestamp = Timestamp.valueOf(LocalDate.now()
+        .atTime(LocalTime.now())
+        .atOffset(OffsetDateTime.now().offset)
+        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
 }
