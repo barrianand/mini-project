@@ -9,7 +9,9 @@ Description
 Installing
 ----------
 
-`gh repo clone barrianand/mini-project` command using Github CLI to clone the repo or copy the link by https/ssh from here [mini-project](https://github.com/barrianand/mini-project). It includes all dependencies. You must have the Java Runtime Environment version 17 and kotlin version 1.8.0.
+`gh repo clone barrianand/mini-project` command using Github CLI to clone the repository.
+
+`git bash` or `git CLI` copy the link by https/ssh from here [mini-project](https://github.com/barrianand/mini-project).
 
 Usage
 -----
